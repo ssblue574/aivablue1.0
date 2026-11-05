@@ -1,0 +1,32 @@
+
+> copy-of-hardwaremind-ai---global-decision-platform@0.0.0 build
+> vite build
+
+vite v6.4.1 building for production...
+(!) <script type="importmap"> should come before <script type="module"> and <link rel="modulepreload"> in /index.html
+transforming...
+✓ 26 modules transformed.
+✗ Build failed in 4.71s
+error during build:
+[vite:esbuild] Transform failed with 1 error:
+/Users/user/Desktop/copy-of-hardwaremind-ai---global-decision-platform (3)/components/ProductDetailView.tsx:1146:16: ERROR: Expected ")" but found "{"
+file: /Users/user/Desktop/copy-of-hardwaremind-ai---global-decision-platform (3)/components/ProductDetailView.tsx:1146:16
+
+Expected ")" but found "{"
+1144|          </div>
+1145|  
+1146|                  {
+   |                  ^
+1147|          isMounted && isCheckoutOpen && pendingChannel && createPortal(
+1148|              <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 backdrop-blur-sm px-4">
+
+    at failureErrorWithLog (/Users/user/Desktop/copy-of-hardwaremind-ai---global-decision-platform (3)/node_modules/esbuild/lib/main.js:1467:15)
+    at /Users/user/Desktop/copy-of-hardwaremind-ai---global-decision-platform (3)/node_modules/esbuild/lib/main.js:736:50
+    at responseCallbacks.<computed> (/Users/user/Desktop/copy-of-hardwaremind-ai---global-decision-platform (3)/node_modules/esbuild/lib/main.js:603:9)
+    at handleIncomingPacket (/Users/user/Desktop/copy-of-hardwaremind-ai---global-decision-platform (3)/node_modules/esbuild/lib/main.js:658:12)
+    at Socket.readFromStdout (/Users/user/Desktop/copy-of-hardwaremind-ai---global-decision-platform (3)/node_modules/esbuild/lib/main.js:581:7)
+    at Socket.emit (node:events:508:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)

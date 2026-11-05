@@ -1,0 +1,408 @@
+/**
+ * Browser Compatibility Fallbacks
+ * Provides graceful degradation for unsupported CSS features
+ */
+
+/* ============================================
+   BACKDROP-FILTER FALLBACKS
+   ============================================ */
+
+/* Default fallback: solid background for browsers without backdrop-filter */
+.glass-card,
+.glass-card-light,
+.glassmorphic-card {
+  /* Fallback for no backdrop-filter support */
+  background: rgba(17, 17, 17, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+[data-theme='light'] .glass-card,
+[data-theme='light'] .glass-card-light,
+[data-theme='light'] .glassmorphic-card {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Light theme specific glass card */
+.glass-card-light {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Enhanced version when backdrop-filter is supported */
+@supports (backdrop-filter: blur(20px)) or (-webkit-backdrop-filter: blur(20px)) {
+  .glass-card,
+  .glassmorphic-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+  }
+  
+  [data-theme='light'] .glass-card,
+  [data-theme='light'] .glassmorphic-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+  }
+  
+  .glass-card-light {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+  }
+}
+
+/* Navbar fallback */
+nav,
+.navbar {
+  background: rgba(0, 0, 0, 0.9);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+[data-theme='light'] nav,
+[data-theme='light'] .navbar {
+  background: rgba(255, 255, 255, 0.95);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+@supports (backdrop-filter: blur(30px)) or (-webkit-backdrop-filter: blur(30px)) {
+  nav,
+  .navbar {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+  }
+  
+  [data-theme='light'] nav,
+  [data-theme='light'] .navbar {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+  }
+}
+
+/* Modal backdrop fallback */
+.modal-backdrop,
+[role="dialog"]::before {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+@supports (backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px)) {
+  .modal-backdrop,
+  [role="dialog"]::before {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+}
+
+/* ============================================
+   3D TRANSFORMS FALLBACKS
+   ============================================ */
+
+/* Default: 2D transforms only */
+.card-3d,
+.product-card {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-3d:hover,
+.product-card:hover {
+  transform: translateY(-8px) scale(1.02);
+}
+
+/* Enhanced 3D when supported */
+@supports (transform: perspective(1000px)) {
+  .card-3d,
+  .product-card {
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  
+  .card-3d:hover,
+  .product-card:hover {
+    transform: perspective(1000px) rotateX(2deg) rotateY(-5deg) translateY(-10px) scale(1.02);
+  }
+}
+
+/* Disable 3D transforms on mobile for better performance */
+@media (max-width: 768px) {
+  .card-3d,
+  .product-card {
+    transform-style: flat !important;
+  }
+  
+  .card-3d:hover,
+  .product-card:hover {
+    transform: translateY(-4px) scale(1.01) !important;
+  }
+}
+
+/* ============================================
+   GRADIENT TEXT FALLBACKS
+   ============================================ */
+
+/* Fallback: solid color */
+.gradient-text {
+  color: #00FFC6;
+}
+
+[data-theme='light'] .gradient-text {
+  color: #0071E3;
+}
+
+/* Enhanced gradient when supported */
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .gradient-text {
+    background: linear-gradient(135deg, #00FFC6, #FF5FD2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
+  
+  [data-theme='light'] .gradient-text {
+    background: linear-gradient(135deg, #0071E3, #BF5AF2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+/* ============================================
+   ANIMATION FALLBACKS
+   ============================================ */
+
+/* Disable complex animations on older browsers */
+.no-webAnimations .particle-system,
+.no-webAnimations .neural-network {
+  display: none;
+}
+
+/* Simplified animations for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  /* Disable particle and neural network animations */
+  .particle-system,
+  .neural-network,
+  canvas {
+    animation: none !important;
+    display: none;
+  }
+  
+  /* Keep essential transitions but make them instant */
+  .modal,
+  .toast,
+  [role="dialog"] {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================
+   GRID FALLBACKS
+   ============================================ */
+
+/* Fallback: flexbox layout */
+.grid-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.grid-layout > * {
+  flex: 1 1 calc(33.333% - 1rem);
+  min-width: 280px;
+}
+
+/* Enhanced grid when supported */
+@supports (display: grid) {
+  .grid-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .grid-layout > * {
+    flex: none;
+    min-width: 0;
+  }
+}
+
+/* ============================================
+   CUSTOM PROPERTIES FALLBACKS
+   ============================================ */
+
+/* Fallback values for browsers without CSS custom properties */
+.no-customProperties {
+  /* Dark theme defaults */
+  --bg-primary: #050505;
+  --text-primary: rgba(255, 255, 255, 0.95);
+  --color-primary: #00FFC6;
+}
+
+.no-customProperties[data-theme='light'] {
+  /* Light theme defaults */
+  --bg-primary: #FFFFFF;
+  --text-primary: rgba(0, 0, 0, 0.9);
+  --color-primary: #0071E3;
+}
+
+/* ============================================
+   BROWSER-SPECIFIC FIXES
+   ============================================ */
+
+/* Safari-specific fixes */
+@supports (-webkit-appearance: none) {
+  /* Fix for Safari's backdrop-filter rendering issues */
+  .glass-card,
+  .glassmorphic-card {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+  
+  /* Fix for Safari's smooth scrolling */
+  html {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Firefox-specific fixes */
+@-moz-document url-prefix() {
+  /* Firefox doesn't support backdrop-filter yet (as of 2024) */
+  .glass-card,
+  .glassmorphic-card {
+    background: rgba(17, 17, 17, 0.9) !important;
+  }
+  
+  [data-theme='light'] .glass-card,
+  [data-theme='light'] .glassmorphic-card {
+    background: rgba(255, 255, 255, 0.9) !important;
+  }
+}
+
+/* Edge-specific fixes */
+@supports (-ms-ime-align: auto) {
+  /* Older Edge versions */
+  .card-3d {
+    transform-style: flat;
+  }
+}
+
+/* ============================================
+   MOBILE BROWSER OPTIMIZATIONS
+   ============================================ */
+
+@media (max-width: 768px) {
+  /* Reduce blur intensity on mobile for better performance */
+  @supports (backdrop-filter: blur(10px)) {
+    .glass-card,
+    .glassmorphic-card {
+      backdrop-filter: blur(10px) !important;
+      -webkit-backdrop-filter: blur(10px) !important;
+    }
+    
+    nav,
+    .navbar {
+      backdrop-filter: blur(15px) !important;
+      -webkit-backdrop-filter: blur(15px) !important;
+    }
+  }
+  
+  /* Disable complex shadows on mobile */
+  .card-3d,
+  .product-card {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  }
+  
+  /* Simplify animations on mobile */
+  * {
+    animation-duration: 0.2s !important;
+  }
+}
+
+/* ============================================
+   TOUCH DEVICE OPTIMIZATIONS
+   ============================================ */
+
+@media (hover: none) and (pointer: coarse) {
+  /* Remove hover effects on touch devices */
+  .card-3d:hover,
+  .product-card:hover {
+    transform: none !important;
+  }
+  
+  /* Make tap targets larger */
+  button,
+  a,
+  [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Disable hover-only animations */
+  .hover-glow,
+  .hover-lift {
+    animation: none !important;
+  }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+
+@media print {
+  /* Remove backgrounds and effects for printing */
+  .glass-card,
+  .glassmorphic-card,
+  nav,
+  .navbar {
+    background: white !important;
+    backdrop-filter: none !important;
+    border: 1px solid #ccc !important;
+  }
+  
+  /* Hide decorative elements */
+  .particle-system,
+  .neural-network,
+  canvas {
+    display: none !important;
+  }
+  
+  /* Ensure text is readable */
+  * {
+    color: black !important;
+    text-shadow: none !important;
+  }
+}
+
+/* ============================================
+   HIGH CONTRAST MODE
+   ============================================ */
+
+@media (prefers-contrast: high) {
+  /* Increase contrast for accessibility */
+  .glass-card,
+  .glassmorphic-card {
+    background: rgba(0, 0, 0, 0.95) !important;
+    border: 2px solid rgba(255, 255, 255, 0.5) !important;
+  }
+  
+  [data-theme='light'] .glass-card,
+  [data-theme='light'] .glassmorphic-card {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border: 2px solid rgba(0, 0, 0, 0.5) !important;
+  }
+  
+  /* Remove blur effects in high contrast mode */
+  * {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}

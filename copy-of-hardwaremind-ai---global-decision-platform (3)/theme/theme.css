@@ -1,0 +1,215 @@
+/* Theme Engine CSS - Smooth Transitions and Design Tokens */
+
+/* Theme transition animation */
+.theme-transitioning,
+.theme-transitioning * {
+  transition: 
+    background-color var(--duration-normal) var(--easing-standard),
+    color var(--duration-normal) var(--easing-standard),
+    border-color var(--duration-normal) var(--easing-standard),
+    box-shadow var(--duration-normal) var(--easing-standard) !important;
+}
+
+/* Root CSS Custom Properties */
+:root {
+  /* Animation durations */
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 600ms;
+  
+  /* Easing functions */
+  --easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  --easing-accelerate: cubic-bezier(0.4, 0, 1, 1);
+  --easing-sharp: cubic-bezier(0.4, 0, 0.6, 1);
+  
+  /* Blur effects */
+  --blur-light: 10px;
+  --blur-medium: 20px;
+  --blur-heavy: 40px;
+  
+  /* Spacing (4px base) */
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 20px;
+  --spacing-6: 24px;
+  --spacing-8: 32px;
+  --spacing-10: 40px;
+  --spacing-12: 48px;
+  --spacing-16: 64px;
+  --spacing-20: 80px;
+  --spacing-24: 96px;
+  --spacing-32: 128px;
+  
+  /* Border radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-full: 9999px;
+}
+
+/* Dark Theme (Default) */
+:root,
+[data-theme='dark'] {
+  /* Background colors */
+  --bg-primary: #050505;
+  --bg-secondary: #0a0a0f;
+  --bg-tertiary: #0b0d13;
+  
+  /* Surface colors */
+  --surface-primary: rgba(255, 255, 255, 0.05);
+  --surface-secondary: rgba(255, 255, 255, 0.08);
+  --surface-tertiary: rgba(255, 255, 255, 0.12);
+  
+  /* Primary colors (Cyan) */
+  --color-primary: #00FFC6;
+  --color-primary-variant: #00E5B0;
+  --color-primary-dark: #00CCB3;
+  
+  /* Secondary colors (Magenta) */
+  --color-secondary: #FF5FD2;
+  --color-secondary-variant: #FF4DC4;
+  --color-secondary-dark: #E63DB8;
+  
+  /* Accent colors (Purple) */
+  --color-accent: #8B5CF6;
+  --color-accent-variant: #7C3AED;
+  --color-accent-dark: #6D28D9;
+  
+  /* Glow colors */
+  --glow-cyan: #00FFC6;
+  --glow-magenta: #FF5FD2;
+  --glow-purple: #8B5CF6;
+  --glow-blue: #6AA8FF;
+  --glow-orange: #FF4D00;
+  
+  /* Text colors */
+  --text-primary: rgba(255, 255, 255, 0.95);
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --text-tertiary: rgba(255, 255, 255, 0.5);
+  
+  /* Border colors */
+  --border-primary: rgba(255, 255, 255, 0.12);
+  --border-secondary: rgba(255, 255, 255, 0.08);
+}
+
+/* Light Theme */
+[data-theme='light'] {
+  /* Background colors */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F6F7FB;
+  --bg-tertiary: #EEF0F5;
+  
+  /* Surface colors */
+  --surface-primary: rgba(0, 0, 0, 0.02);
+  --surface-secondary: rgba(0, 0, 0, 0.04);
+  --surface-tertiary: rgba(0, 0, 0, 0.08);
+  
+  /* Primary colors (Blue) */
+  --color-primary: #0071E3;
+  --color-primary-variant: #0077ED;
+  --color-primary-dark: #005BB5;
+  
+  /* Secondary colors (Pink) */
+  --color-secondary: #FF2D55;
+  --color-secondary-variant: #FF375F;
+  --color-secondary-dark: #E6194B;
+  
+  /* Accent colors (Purple) */
+  --color-accent: #5E5CE6;
+  --color-accent-variant: #7B79EA;
+  --color-accent-dark: #4A48C4;
+  
+  /* Glow colors */
+  --glow-cyan: #00D4AA;
+  --glow-magenta: #FF2D92;
+  --glow-purple: #7C3AED;
+  --glow-blue: #0071E3;
+  --glow-orange: #FF6B00;
+  
+  /* Text colors */
+  --text-primary: rgba(0, 0, 0, 0.9);
+  --text-secondary: rgba(0, 0, 0, 0.6);
+  --text-tertiary: rgba(0, 0, 0, 0.4);
+  
+  /* Border colors */
+  --border-primary: rgba(0, 0, 0, 0.12);
+  --border-secondary: rgba(0, 0, 0, 0.08);
+}
+
+/* Utility Classes */
+.bg-primary {
+  background-color: var(--bg-primary);
+}
+
+.bg-secondary {
+  background-color: var(--bg-secondary);
+}
+
+.surface-primary {
+  background-color: var(--surface-primary);
+}
+
+.text-primary {
+  color: var(--text-primary);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.border-primary {
+  border-color: var(--border-primary);
+}
+
+/* Glow effects */
+.glow-cyan {
+  box-shadow: 0 0 20px var(--glow-cyan);
+}
+
+.glow-magenta {
+  box-shadow: 0 0 20px var(--glow-magenta);
+}
+
+.glow-purple {
+  box-shadow: 0 0 20px var(--glow-purple);
+}
+
+/* Animation utilities */
+.animate-fast {
+  animation-duration: var(--duration-fast);
+}
+
+.animate-normal {
+  animation-duration: var(--duration-normal);
+}
+
+.animate-slow {
+  animation-duration: var(--duration-slow);
+}
+
+.ease-standard {
+  animation-timing-function: var(--easing-standard);
+}
+
+.ease-decelerate {
+  animation-timing-function: var(--easing-decelerate);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .theme-transitioning,
+  .theme-transitioning * {
+    transition-duration: 0.001ms !important;
+  }
+  
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

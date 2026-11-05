@@ -1,0 +1,41 @@
+
+> copy-of-hardwaremind-ai---global-decision-platform@0.0.0 build
+> vite build
+
+vite v6.4.1 building for production...
+(!) <script type="importmap"> should come before <script type="module"> and <link rel="modulepreload"> in /index.html
+transforming...
+✓ 32 modules transformed.
+✗ Build failed in 11.19s
+error during build:
+[vite:esbuild] Transform failed with 2 errors:
+/Users/user/Desktop/copy-of-hardwaremind-ai---global-decision-platform (3)/components/ProductDetailView.tsx:707:18: ERROR: Unexpected closing "div" tag does not match opening fragment tag
+/Users/user/Desktop/copy-of-hardwaremind-ai---global-decision-platform (3)/components/ProductDetailView.tsx:708:16: ERROR: Unterminated regular expression
+file: /Users/user/Desktop/copy-of-hardwaremind-ai---global-decision-platform (3)/components/ProductDetailView.tsx:707:18
+
+Unexpected closing "div" tag does not match opening fragment tag
+705|                          </div>
+706|                      )}
+707|                  </div>
+   |                    ^
+708|              </>)
+709|  }
+
+Unterminated regular expression
+706|                      )}
+707|                  </div>
+708|              </>)
+   |                  ^
+709|  }
+710|  
+
+    at failureErrorWithLog (/Users/user/Desktop/copy-of-hardwaremind-ai---global-decision-platform (3)/node_modules/esbuild/lib/main.js:1467:15)
+    at /Users/user/Desktop/copy-of-hardwaremind-ai---global-decision-platform (3)/node_modules/esbuild/lib/main.js:736:50
+    at responseCallbacks.<computed> (/Users/user/Desktop/copy-of-hardwaremind-ai---global-decision-platform (3)/node_modules/esbuild/lib/main.js:603:9)
+    at handleIncomingPacket (/Users/user/Desktop/copy-of-hardwaremind-ai---global-decision-platform (3)/node_modules/esbuild/lib/main.js:658:12)
+    at Socket.readFromStdout (/Users/user/Desktop/copy-of-hardwaremind-ai---global-decision-platform (3)/node_modules/esbuild/lib/main.js:581:7)
+    at Socket.emit (node:events:508:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)

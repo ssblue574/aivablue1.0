@@ -1,0 +1,458 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global Styles */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Content images must stay colorful and vivid — never grayscale. */
+img:not([aria-hidden="true"]) {
+  filter: grayscale(0) saturate(1.08) contrast(1.02);
+}
+
+.grayscale,
+.grayscale-0,
+[class*="grayscale"] {
+  filter: grayscale(0) saturate(1.08) !important;
+}
+
+.mix-blend-luminosity {
+  mix-blend-mode: normal !important;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Ensure text is always readable over backgrounds */
+.text-readable {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Enhanced text shadows for better readability */
+.text-shadow-sm {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.text-shadow-md {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.text-shadow-lg {
+  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* Ensure content is always above backgrounds */
+.content-layer {
+  position: relative;
+  z-index: 10;
+}
+
+/* Glass card with better text contrast */
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.glass-card-light {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* Hero gradient backgrounds */
+.hero-gradient-dark {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(0, 0, 0, 0.85) 50%,
+    rgba(0, 0, 0, 0.95) 100%
+  );
+}
+
+.hero-gradient-light {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0.90) 50%,
+    rgba(255, 255, 255, 0.95) 100%
+  );
+}
+
+/* Improved text contrast utilities */
+@layer utilities {
+  /* Dark mode text with better contrast */
+  .text-white-readable {
+    color: rgba(255, 255, 255, 0.95);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  
+  .text-white-secondary {
+    color: rgba(255, 255, 255, 0.80);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  }
+  
+  .text-white-tertiary {
+    color: rgba(255, 255, 255, 0.65);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Light mode text */
+  .text-black-readable {
+    color: rgba(0, 0, 0, 0.90);
+  }
+  
+  .text-black-secondary {
+    color: rgba(0, 0, 0, 0.70);
+  }
+  
+  .text-black-tertiary {
+    color: rgba(0, 0, 0, 0.55);
+  }
+}
+
+/* Ensure all headings are readable */
+h1, h2, h3, h4, h5, h6 {
+  position: relative;
+  z-index: 10;
+}
+
+/* Dark mode specific improvements - ENHANCED */
+.dark h1, .dark h2, .dark h3 {
+  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.95), 0 6px 24px rgba(0, 0, 0, 0.8), 0 1px 3px rgba(0, 0, 0, 1);
+}
+
+.dark h4, .dark h5, .dark h6 {
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9), 0 1px 3px rgba(0, 0, 0, 1);
+}
+
+.dark p, .dark span, .dark div {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8), 0 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+/* Ensure all text in dark mode has readable shadows - ENHANCED */
+.dark .text-white,
+.dark .text-white\/80,
+.dark .text-white\/70,
+.dark .text-white\/60,
+.dark .text-white\/50,
+.dark .text-white\/40,
+.dark .text-white\/30,
+.dark .text-white\/20 {
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.95), 0 1px 3px rgba(0, 0, 0, 1);
+}
+
+/* Extra shadow for very low opacity text - ENHANCED */
+.dark .text-white\/40,
+.dark .text-white\/30,
+.dark .text-white\/20 {
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 1), 0 4px 16px rgba(0, 0, 0, 0.9), 0 1px 3px rgba(0, 0, 0, 1);
+}
+
+/* Ensure all small text has shadows - ENHANCED */
+.dark .text-xs,
+.dark .text-sm {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9), 0 1px 2px rgba(0, 0, 0, 1);
+}
+
+/* Ensure all labels and secondary text have shadows - ENHANCED */
+.dark label,
+.dark .text-gray-500,
+.dark .text-gray-600 {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.85), 0 1px 2px rgba(0, 0, 0, 0.95);
+}
+
+/* Extra enhancement for buttons and links */
+.dark button,
+.dark a {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+/* Specific enhancement for large numbers and stats */
+.dark .text-2xl,
+.dark .text-3xl,
+.dark .text-4xl,
+.dark .text-5xl,
+.dark .text-6xl,
+.dark .text-7xl {
+  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.95), 0 6px 24px rgba(0, 0, 0, 0.85), 0 1px 4px rgba(0, 0, 0, 1);
+}
+
+/* Ensure buttons and interactive elements are always visible */
+button, a {
+  position: relative;
+  z-index: 10;
+}
+
+/* === UX OPTIMIZATIONS === */
+
+/* 1. Minimum touch target size for mobile (44x44px) */
+button, a, input[type="button"], input[type="submit"] {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* 2. Touch feedback for better mobile UX */
+button:active, a:active {
+  transform: scale(0.98);
+  opacity: 0.9;
+  transition: transform 0.1s ease, opacity 0.1s ease;
+}
+
+/* 3. Smooth transitions for all interactive elements */
+button, a, input, select, textarea {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 4. Focus indicators for keyboard navigation */
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid #00FFC6;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.dark button:focus-visible, .dark a:focus-visible, .dark input:focus-visible {
+  outline-color: #00FFC6;
+  box-shadow: 0 0 0 4px rgba(0, 255, 198, 0.1);
+}
+
+/* 5. Improved readability for long text */
+.content, article, .text-content {
+  max-width: 65ch;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+}
+
+/* 6. Loading states */
+.loading {
+  pointer-events: none;
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* 7. Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 8. Prevent layout shift */
+img, video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* 9. Better spacing for mobile */
+@media (max-width: 768px) {
+  button, a {
+    padding: 12px 20px;
+  }
+  
+  /* Increase tap target spacing */
+  button + button,
+  a + a {
+    margin-left: 12px;
+  }
+}
+
+/* 10. Skeleton loading animation */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05) 25%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.dark .skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05) 25%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 75%
+  );
+}
+
+/* 11. Improved hover states */
+button:hover:not(:disabled), a:hover {
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 12. Better error states */
+.error-message {
+  color: #ff4444;
+  font-size: 14px;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dark .error-message {
+  color: #ff6b6b;
+}
+
+/* 13. Success states */
+.success-message {
+  color: #00ff88;
+  font-size: 14px;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 14. Tooltip improvements */
+[data-tooltip] {
+  position: relative;
+  cursor: help;
+}
+
+[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  font-size: 12px;
+  white-space: nowrap;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  z-index: 1000;
+}
+
+.dark [data-tooltip]:hover::after {
+  background: rgba(255, 255, 255, 0.95);
+  color: black;
+}
+
+/* 15. Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Improved card backgrounds for better text visibility */
+.card-dark {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px);
+}
+
+.card-light {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+}
+
+/* Additional enhancements for specific UI elements that might be hard to read */
+
+/* Enhance all text inside cards */
+.dark .glass-card *,
+.dark .glass-card-light * {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9), 0 1px 2px rgba(0, 0, 0, 1);
+}
+
+/* Enhance text in navigation */
+.dark nav *,
+.dark nav button,
+.dark nav a {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.85), 0 1px 2px rgba(0, 0, 0, 0.95);
+}
+
+/* Enhance text over images and backgrounds */
+.dark [class*="absolute"] *,
+.dark [class*="relative"] * {
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9), 0 1px 3px rgba(0, 0, 0, 1);
+}
+
+/* Enhance placeholder text */
+.dark input::placeholder,
+.dark textarea::placeholder {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Enhance text in badges and pills */
+.dark [class*="badge"] *,
+.dark [class*="pill"] *,
+.dark [class*="chip"] *,
+.dark [class*="tag"] * {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9), 0 1px 2px rgba(0, 0, 0, 1);
+}
+
+/* Force white text to be more opaque */
+.dark .text-white {
+  color: rgba(255, 255, 255, 0.98) !important;
+}
+
+.dark .text-white\/80 {
+  color: rgba(255, 255, 255, 0.88) !important;
+}
+
+.dark .text-white\/70 {
+  color: rgba(255, 255, 255, 0.80) !important;
+}
+
+.dark .text-white\/60 {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.dark .text-white\/50 {
+  color: rgba(255, 255, 255, 0.70) !important;
+}
+
+.dark .text-white\/40 {
+  color: rgba(255, 255, 255, 0.65) !important;
+}
