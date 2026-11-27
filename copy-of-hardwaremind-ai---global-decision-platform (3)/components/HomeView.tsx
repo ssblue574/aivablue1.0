@@ -88,17 +88,6 @@ export const HomeView: React.FC<HomeViewProps> = ({ t, setView, newsFeed, onView
         }
     }, [onViewProduct]);
 
-    // 通用时间窗口判断：仅用于前端展示时效控制
-    const isWithinDays = (dateStr: string | undefined, days: number) => {
-        if (!dateStr) return true;
-        const d = new Date(dateStr);
-        if (isNaN(d.getTime())) return true; // 无法解析的日期不过滤，防止误伤
-        const now = new Date();
-        const diff = now.getTime() - d.getTime();
-        if (diff < 0) return true; // 未来事件（预告）保留
-        return diff <= days * 24 * 60 * 60 * 1000;
-    };
-
     useEffect(() => {
         const updateTime = () => {
             const now = new Date();
@@ -125,92 +114,9 @@ export const HomeView: React.FC<HomeViewProps> = ({ t, setView, newsFeed, onView
         return () => clearInterval(interval);
     }, []);
 
-    // 大牌关键词（用于初创雷达排除）
-    const bigBrandKeywords = useMemo(
-        () => [
-            // EN brands
-            'apple', 'google', 'microsoft', 'amazon', 'meta', 'facebook',
-            'tesla', 'openai', 'nvidia', 'amd', 'intel', 'qualcomm',
-            'huawei', 'xiaomi', 'oppo', 'vivo', 'oneplus', 'lenovo',
-            'hp', 'dell', 'ibm', 'broadcom', 'samsung', 'lg', 'sony',
-            'panasonic', 'sharp', 'asus', 'acer', 'msi', 'honor', 'meizu',
-            'motorola', 'snap', 'snapchat', 'spectacles', 'galaxy',
-            'surface', 'windows',
-            // CN brand names / transliterations
-            '苹果', '谷歌', '微软', '亚马逊', '特斯拉', '英伟达', '英特尔',
-            '高通', '华为', '小米', '三星', '索尼', '联想', '华硕', '戴尔',
-            '惠普', '摩托罗拉', '魅族', '荣耀', '欧珀', '维沃', '一加',
-            '博通', '爱立信', '诺基亚', '联发科', '骁龙', '高通骁龙'
-        ],
-        []
-    );
-
-    const isBigBrandStory = useCallback((item?: NewsItem) => {
-        if (!item) return false;
-        const text = `${item.title || ''} ${item.description || ''}`.toLowerCase();
-        return bigBrandKeywords.some(keyword => text.includes(keyword));
-    }, [bigBrandKeywords]);
-
-    // 初创雷达：优先显示产品相关的内容，确保至少17个，不足时自动放宽时间窗口，且排除大牌
-    const startupStories = useMemo(() => {
-        const productCategories = [
-            'Product Launch', 'Product Teaser', 'Software Update', 'Feature Drop',
-            'Milestone', 'Hardware Leak', 'Crowdfunding', 'Update',
-            '新品发布', '新品预告', '软件更新', '功能发布',
-            '里程碑', '硬件爆料', '众筹', '产品更新'
-        ];
-
-        const buildList = (days?: number) => {
-            const base = (newsFeed || []).filter(item => {
-                if (!item || item.stage !== 'startup') return false;
-                if (isBigBrandStory(item)) return false; // 排除大牌
-                return days ? isWithinDays(item.date, days) : true;
-            });
-
-            const productStartups = base.filter(item => productCategories.includes(item.category));
-            const otherStartups = base.filter(item => !productCategories.includes(item.category));
-            return [...productStartups, ...otherStartups];
-        };
-
-        let combined = buildList(90);
-        if (combined.length < 17) combined = buildList(180);
-        if (combined.length < 17) combined = buildList(); // 无时间限制兜底
-
-        return combined.slice(0, 17); // 严格保留 17 条
-    }, [newsFeed]);
-
-    // 深度情报：显示新闻和热点（不含初创雷达内容），不足时放宽时间窗口并允许更多类别
-    const latestIntel = useMemo(() => {
-        if (!newsFeed || newsFeed.length === 0) return [];
-
-        const productCategories = [
-            'Product Launch', 'Product Teaser', 'Crowdfunding',
-            '新品发布', '新品预告', '众筹'
-        ];
-
-        const buildList = (days?: number, allowProduct = false, includeStartup = false) => {
-            return newsFeed.filter(item => {
-                if (!item) return false;
-                if (!includeStartup && item.stage === 'startup') return false;
-                if (!allowProduct && productCategories.includes(item.category)) return false;
-                if (days && !isWithinDays(item.date, days)) return false;
-                return true;
-            });
-        };
-
-        let newsItems = buildList(30, false, false);
-        if (newsItems.length < 15) {
-            newsItems = buildList(90, false, false);
-        }
-        if (newsItems.length < 15) {
-            newsItems = buildList(120, true, false); // 允许产品类，但仍排除 startup
-        }
-        if (newsItems.length < 15) {
-            newsItems = buildList(undefined, true, true); // 全量兜底
-        }
-
-        return newsItems.slice(0, 17); // 严格保留 17 条
-    }, [newsFeed]);
+    // Only the curated and already freshness-checked feed reaches these sections.
+    const startupStories = useMemo(() => newsFeed.filter(item => item.editorialChannel === 'startup'), [newsFeed]);
+    const latestIntel = useMemo(() => newsFeed.filter(item => item.editorialChannel === 'frontier'), [newsFeed]);
 
     // Random 20 milestones for expansion support
     const displayedMilestones = useMemo(() => {
@@ -1086,8 +992,8 @@ export const HomeView: React.FC<HomeViewProps> = ({ t, setView, newsFeed, onView
                             </div>
                             <p className={clsx("text-sm", isDark ? "text-white/60" : "text-gray-600")}>
                                 {t('home_date_format') === 'zh-CN'
-                                    ? '聚焦近 90 天最值得关注的新品与项目，AI 智能推荐评分 80+ 的产品将突出显示'
-                                    : 'Highlights from the most interesting launches in the last 90 days. Products with AI recommendation score 80+ are highlighted'}
+                                    ? '近 7 天可核验的全球初创动态'
+                                    : 'Verified global startup developments from the last 7 days'}
                             </p>
                         </div>
                         <button
@@ -1103,6 +1009,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ t, setView, newsFeed, onView
                         </button>
                     </div>
 
+                    {startupStories.length === 0 && <p role="status" className="py-4 text-sm text-gray-500">{t('home_date_format') === 'zh-CN' ? '暂无符合时效及核验标准的内容。' : 'No verified items in the current window.'}</p>}
                     {/* 初创雷达 - 左右分栏 + 展开后下方网格 */}
                     <div className="flex flex-col lg:flex-row gap-4">
                         {/* 左侧大卡片 - 始终显示 */}
@@ -1163,13 +1070,12 @@ export const HomeView: React.FC<HomeViewProps> = ({ t, setView, newsFeed, onView
                         )}
                         {/* 右侧小卡片网格 - 默认6个，根据评分调整大小 */}
                         <div className="flex-1 grid grid-cols-2 sm:grid-cols-3 auto-rows-fr gap-3">
-                            {startupStories.slice(1, 7).map((item, index) => {
-                                const mobileHidden = index > 1 ? 'hidden sm:block' : '';
+                            {startupStories.slice(1, 7).map((item) => {
                                 const isValidHighScore = isHighScore(item.recommendScore);
                                 const sizeClass = isValidHighScore ? 'scale-110 z-10' : '';
                                 const borderClass = isValidHighScore ? 'ring-2 ring-[#FF4D00] ring-opacity-50' : '';
                                 return (
-                                    <div key={item.id} className={clsx("relative", mobileHidden)}>
+                                    <div key={item.id} className="relative">
                                         <GlassmorphicCard
                                             hoverEffect="glow"
                                             borderGlow={isValidHighScore}
@@ -1230,7 +1136,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ t, setView, newsFeed, onView
                     {/* 展开后：下方更多卡片，根据评分调整大小 */}
                     {expandedStartups && startupStories.length > 7 && (
                         <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 auto-rows-fr gap-3">
-                            {startupStories.slice(7, 17).map((item) => {
+                            {startupStories.slice(7).map((item) => {
                                 const isValidHighScore = isHighScore(item.recommendScore);
                                 const sizeClass = isValidHighScore ? 'scale-110 z-10' : '';
                                 const borderClass = isValidHighScore ? 'ring-2 ring-[#FF4D00] ring-opacity-50' : '';
@@ -1315,8 +1221,8 @@ export const HomeView: React.FC<HomeViewProps> = ({ t, setView, newsFeed, onView
                                 </div>
                                 <p className={clsx("text-sm", isDark ? "text-white/60" : "text-gray-600")}>
                                     {t('home_date_format') === 'zh-CN'
-                                        ? '只展示近 30 天内的深度情报和重点新闻，为您提供战略洞察'
-                                        : 'Only showing key intel and headlines from the last 30 days, providing strategic insights'}
+                                        ? '展示近 72 小时的全球科技、AI 与智能硬件一手动态'
+                                        : 'Firsthand technology, AI and smart hardware updates from the last 72 hours'}
                                 </p>
                             </div>
                             <div className="flex flex-wrap gap-3 text-sm font-medium">
@@ -1328,7 +1234,8 @@ export const HomeView: React.FC<HomeViewProps> = ({ t, setView, newsFeed, onView
                             </div>
                         </div>
 
-                        {/* 深度情报 - 左右分栏 + 展开后下方网格 */}
+                        {latestIntel.length === 0 && <p role="status" className="py-4 text-sm text-gray-500">{t('home_date_format') === 'zh-CN' ? '暂无符合时效及核验标准的内容。' : 'No verified items in the current window.'}</p>}
+                    {/* 深度情报 - 左右分栏 + 展开后下方网格 */}
                         <div className="flex flex-col lg:flex-row gap-4">
                             {/* 左侧大卡片 - 始终显示 */}
                             {latestIntel.length > 0 && (
@@ -1351,7 +1258,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ t, setView, newsFeed, onView
                                         <h3 className={clsx("text-base sm:text-lg font-bold leading-snug mb-2 group-hover:text-[#FF4D00] transition-colors", isDark ? "text-white" : "text-gray-900")}>{latestIntel[0].title}</h3>
                                         <p className={clsx("text-xs sm:text-sm line-clamp-2 mb-3", isDark ? "text-white/60" : "text-gray-600")}>{latestIntel[0].description}</p>
                                         <div className="flex items-center justify-between pt-3 border-t border-dashed border-gray-200 dark:border-white/10">
-                                            <div className="flex items-center gap-1.5 text-[10px] text-gray-400"><span className={clsx("font-medium", isDark ? "text-white/40" : "text-gray-500")}>TechCrunch</span><span>·</span><span>{latestIntel[0].date}</span></div>
+                                            <div className="flex items-center gap-1.5 text-[10px] text-gray-400"><span className={clsx("font-medium", isDark ? "text-white/40" : "text-gray-500")}>{latestIntel[0].source}</span><span>·</span><span>{latestIntel[0].date}</span></div>
                                             <span className={clsx("text-xs font-medium flex items-center gap-1", isDark ? "text-white/50 group-hover:text-[#FF4D00]" : "text-gray-500 group-hover:text-[#FF4D00]")}>{t('home_date_format') === 'zh-CN' ? '阅读' : 'Read'} <ArrowUpRight size={12} /></span>
                                         </div>
                                     </div>
@@ -1360,15 +1267,13 @@ export const HomeView: React.FC<HomeViewProps> = ({ t, setView, newsFeed, onView
                             )}
                             {/* 右侧小卡片网格 - 默认6个 */}
                             <div className="flex-1 grid grid-cols-2 sm:grid-cols-3 gap-3">
-                                {latestIntel.slice(1, 7).map((news, index) => {
-                                    const mobileHidden = index > 1 ? 'hidden sm:block' : '';
-                                    const sources = ['TechCrunch', '36Kr', 'The Verge', 'Bloomberg', 'Wired'];
-                                    return (
+                                {latestIntel.slice(1, 7).map((news) => {
+                                        return (
                                         <GlassmorphicCard
                                             key={news.id}
                                             hoverEffect="glow"
                                             borderGlow={news.recommendScore !== undefined && news.recommendScore >= 80}
-                                            className={clsx("group overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-1", mobileHidden)}
+                                            className="group overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-1"
                                         >
                                             <article onClick={() => onViewNews(news)} className="h-full flex flex-col">
                                             <div className="relative w-full overflow-hidden bg-gray-100 dark:bg-white/5">
@@ -1387,7 +1292,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ t, setView, newsFeed, onView
                                                 <h3 className={clsx("text-[11px] sm:text-[12px] font-bold leading-snug line-clamp-2 group-hover:text-[#FF4D00] transition-colors mb-1", isDark ? "text-white" : "text-gray-900")}>{news.title}</h3>
                                                 <p className={clsx("text-[9px] line-clamp-2 mb-2 leading-snug", isDark ? "text-white/60" : "text-gray-600")}>{news.description}</p>
                                                 <div className="flex items-center gap-2 mt-2 pt-2 border-t border-dashed border-gray-100 dark:border-white/5">
-                                                    <span className={clsx("text-[9px] font-medium", isDark ? "text-white/50" : "text-gray-500")}>{sources[index % 5]}</span>
+                                                    <span className={clsx("text-[9px] font-medium", isDark ? "text-white/50" : "text-gray-500")}>{news.source}</span>
                                                     <span className="text-gray-300 dark:text-white/20">·</span>
                                                     <span className="text-[9px] text-gray-400">{news.date}</span>
                                                     <span className={clsx("ml-auto text-[9px] font-medium flex items-center gap-0.5", isDark ? "text-[#FF4D00]/70" : "text-[#FF4D00]")}><ArrowUpRight size={9} /></span>
@@ -1402,8 +1307,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ t, setView, newsFeed, onView
                         {/* 展开后：下方更多卡片 */}
                         {expandedNews && latestIntel.length > 7 && (
                             <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-                                {latestIntel.slice(7, 17).map((news, index) => {
-                                    const sources = ['TechCrunch', '36Kr', 'The Verge', 'Bloomberg', 'Wired'];
+                                {latestIntel.slice(7).map((news) => {
                                     return (
                                         <GlassmorphicCard
                                             key={news.id}
@@ -1421,7 +1325,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ t, setView, newsFeed, onView
                                                 <h3 className={clsx("text-[11px] sm:text-[12px] font-bold leading-snug line-clamp-2 group-hover:text-[#FF4D00] transition-colors mb-1", isDark ? "text-white" : "text-gray-900")}>{news.title}</h3>
                                                 <p className={clsx("text-[9px] line-clamp-1 mb-2", isDark ? "text-white/60" : "text-gray-600")}>{news.description}</p>
                                                 <div className="flex items-center gap-2 mt-2 pt-2 border-t border-dashed border-gray-100 dark:border-white/5">
-                                                    <span className={clsx("text-[9px] font-medium", isDark ? "text-white/50" : "text-gray-500")}>{sources[(index + 7) % 5]}</span>
+                                                    <span className={clsx("text-[9px] font-medium", isDark ? "text-white/50" : "text-gray-500")}>{news.source}</span>
                                                     <span className="text-gray-300 dark:text-white/20">·</span>
                                                     <span className="text-[9px] text-gray-400">{news.date}</span>
                                                     <span className={clsx("ml-auto text-[9px] font-medium flex items-center gap-0.5", isDark ? "text-[#FF4D00]/70" : "text-[#FF4D00]")}><ArrowUpRight size={9} /></span>

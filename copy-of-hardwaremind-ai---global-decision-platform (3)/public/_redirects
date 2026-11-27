@@ -1,1 +1,3 @@
+/editorial-runtime.json https://raw.githubusercontent.com/ssblue574/aivablue1.0/editorial-feed/editorial-feed.json 200
+/news/assets/* /assets/:splat 200
 /* /index.html 200

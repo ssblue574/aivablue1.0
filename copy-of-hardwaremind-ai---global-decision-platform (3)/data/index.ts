@@ -1,13 +1,11 @@
-import { Language, NewsItem, Product, KeynoteItem, CommunityPost } from './types';
-import { NEWS_LIBRARY } from './news';
+import { Language, Product, KeynoteItem, CommunityPost } from './types';
 import { PRODUCT_LIBRARY } from './products';
 import { KEYNOTE_LIBRARY } from './keynotes';
 import { COMMUNITY_POSTS, getLocalizedCommunityPosts } from './community';
-import { toNews, toProduct, toKeynote } from './helpers';
+import { toProduct, toKeynote } from './helpers';
 import { generateMockProducts, generateMilestones } from './generators';
 
 export * from './types';
-export * from './news';
 export * from './products';
 export * from './keynotes';
 export * from './community';
@@ -15,15 +13,6 @@ export * from './helpers';
 export * from './generators';
 export * from './homeShowcase';
 export * from './productTypes';
-
-export const getNewsFeed = (lang: Language): NewsItem[] => {
-    try {
-        return NEWS_LIBRARY.map(n => toNews(n, lang)).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-    } catch (error) {
-        console.error('Error in getNewsFeed:', error);
-        return [];
-    }
-};
 
 const formatLaunchDate = (d: Date): string => {
     const y = d.getFullYear();

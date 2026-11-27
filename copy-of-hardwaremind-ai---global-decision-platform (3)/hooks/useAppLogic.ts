@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
-import { AppView, Product, ComparisonResult, ChatMessage, NewsItem, Language, CommunityPost } from '../data';
+import { AppView, Product, ComparisonResult, ChatMessage, Language, CommunityPost } from '../data';
 import { discoverHardware, compareProductsAI, sendChatMessage } from '../services/geminiService';
-import { getNewsFeed, getLatestDrops, getCategories, getKeynotes, getCommunityPosts, getMilestones, resolveHomeShowcaseProducts } from '../data';
+import { getLatestDrops, getCategories, getKeynotes, getCommunityPosts, getMilestones, resolveHomeShowcaseProducts } from '../data';
 import { storageService } from '../services/storageService';
 import { cloudService, supabase, logEvent } from '../services/supabaseService';
 import { generateProductImage } from '../services/imageGenerationService';
@@ -21,7 +21,6 @@ export const useAppLogic = (lang: Language, t: (key: any) => string, toast?: Toa
   const [favorites, setFavorites] = useState<Product[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
-  const [newsFeed, setNewsFeed] = useState<NewsItem[]>([]);
   const [localPosts, setLocalPosts] = useState<CommunityPost[]>([]);
   const [latestFiveProducts, setLatestFiveProducts] = useState<Product[]>([]); // 仅首页横条，见 data/homeShowcase.ts
 
@@ -57,7 +56,6 @@ export const useAppLogic = (lang: Language, t: (key: any) => string, toast?: Toa
       try {
         const drops = getLatestDrops(lang);
         const cats = getCategories(lang);
-        setNewsFeed(getNewsFeed(lang));
 
         // 产品时效规则：默认仅展示「近半年」内的新品；若标记为经典（isClassic），则始终保留
         const now = new Date();
@@ -591,7 +589,6 @@ export const useAppLogic = (lang: Language, t: (key: any) => string, toast?: Toa
     selectedProducts, toggleSelection,
     favorites, toggleFavorite,
     searchQuery, setSearchQuery, isSearching, handleSearch,
-    newsFeed,
     isComparing, comparisonResult, runComparison,
     activeCategory, setActiveCategory, categories,
     isChatOpen, setIsChatOpen, chatMessages, chatInput, setChatInput, isChatLoading, handleSendChat, chatEndRef,

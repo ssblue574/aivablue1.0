@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540">
+  <title>Aiva editorial placeholder (not a photograph)</title>
+  <defs><linearGradient id="g" x2="1" y2="1"><stop stop-color="#111b30"/><stop offset="1" stop-color="#0b353e"/></linearGradient></defs>
+  <path fill="url(#g)" d="M0 0h960v540H0z"/>
+  <g fill="none" stroke="#66e7c4" stroke-width="3" opacity=".65"><circle cx="480" cy="245" r="108"/><circle cx="480" cy="245" r="76"/><circle cx="480" cy="245" r="42"/><path d="M372 245h216m-108-108v216"/></g>
+  <text x="480" y="410" text-anchor="middle" fill="#bdf9eb" font-size="30" font-family="sans-serif" letter-spacing="8">AIVA</text>
+</svg>

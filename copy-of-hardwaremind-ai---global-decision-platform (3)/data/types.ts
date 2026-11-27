@@ -203,6 +203,8 @@ export interface NewsItem {
     videoUrl?: string;
     source?: string;
     readMoreUrl?: string;
+    editorialInsight?: string;
+    editorialChannel?: 'frontier' | 'startup';
     tags?: string[];
     stage?: NewsStage;
     isRadar?: boolean; // If true, show in Radar Stream
