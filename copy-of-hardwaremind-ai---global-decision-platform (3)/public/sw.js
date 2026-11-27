@@ -15,6 +15,7 @@ const shouldBypassCache = (url) => {
   return (
     url.includes('/@') ||
     url.includes('/node_modules/') ||
+    url.endsWith('/editorial-runtime.json') ||
     url.includes('.tsx') ||
     url.includes('.ts') ||
     url.includes('.jsx') ||

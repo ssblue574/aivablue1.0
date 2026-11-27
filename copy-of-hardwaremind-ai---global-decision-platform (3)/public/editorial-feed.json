@@ -1,0 +1,121 @@
+{
+  "version": 1,
+  "articles": [
+    {
+      "id": "amazon-decart-technology",
+      "channel": "startup",
+      "occurredAt": "2026-11-23T00:00:00-08:00",
+      "datePrecision": "day",
+      "displayDate": "2026-11-23",
+      "source": "Amazon",
+      "sourceUrl": "https://www.aboutamazon.com/news/company-news/amazon-decart-ai-optimization",
+      "locales": {
+        "zh": {
+          "title": "亚马逊签约购买 Decart 的 AI 优化技术",
+          "category": "技术交易",
+          "body": [
+            "亚马逊 11 月 23 日披露，已签约购买初创公司 Decart 的 DOS 优化技术，并计划吸收其联合创始人及技术团队。",
+            "亚马逊称双方自 2025 年起在 Trainium 芯片上合作。交易对象是技术，不宜表述为买下 Decart 整家公司；交割仍有监管审查等条件，客户尚无新价格或性能承诺。"
+          ],
+          "insight": "后续值得看的是哪些模型真正支持这项优化，以及客户在相同质量下的推理成本是否下降。"
+        },
+        "en": {
+          "title": "Amazon signs deal for Decart’s AI optimization technology",
+          "category": "Technology deal",
+          "body": [
+            "Amazon said on November 23 it signed an agreement to acquire the technology behind Decart’s Optimization Stack and plans to hire the startup's co-founders and technical team.",
+            "Amazon says the two teams worked on Trainium starting in 2025. The agreement covers technology, not a disclosed purchase of all of Decart. Closing is subject to conditions, including regulatory clearance; there is no new commitment on customer pricing or performance."
+          ],
+          "insight": "Track which models actually use the optimization and whether inference costs fall at equivalent output quality."
+        }
+      }
+    },
+    {
+      "id": "ncredible-licensing-disclosure",
+      "channel": "startup",
+      "occurredAt": "2026-11-26T00:00:00+09:00",
+      "datePrecision": "day",
+      "displayDate": "2026-11-26",
+      "source": "Kakao Ventures",
+      "sourceUrl": "https://www.kakao.vc/posts/sigpumjejo-saneob-teughwa-ax-seutateueob-enkeuredeobeul-kakaobenceoseu-deobenceoseurobuteo-sideu-tuja-yuci",
+      "locales": {
+        "zh": {
+          "title": "投资方披露：韩国食品制造软件初创 NCredible 已签许可协议",
+          "category": "软件许可",
+          "body": [
+            "Kakao Ventures 11 月 26 日披露，韩国初创 NCredible 与一家大型食品供应链企业签署了软件许可协议。该消息来自投资方，客户名称、合同实际签署日与金额未公开。",
+            "NCredible 将软件应用于食品制造相关流程。披露的许可协议不能证明对方已完成部署，也没有独立公布节省工时或成本的数据。"
+          ],
+          "insight": "比融资规模更有参考价值的是具名部署、验收或可以比较的生产指标。"
+        },
+        "en": {
+          "title": "Investor discloses NCredible’s food supply-chain software license",
+          "category": "Software licensing",
+          "body": [
+            "Kakao Ventures disclosed on November 26 that Korean startup NCredible had signed a software license with a large food supply-chain company. The investor did not name the buyer or publish the signing date or value.",
+            "NCredible focuses on food manufacturing workflows. A signed license does not establish a live deployment, time savings, or lower costs."
+          ],
+          "insight": "Look for a named deployment, acceptance record or comparable production metrics."
+        }
+      }
+    },
+    {
+      "id": "obsidian-agent-connectors",
+      "channel": "frontier",
+      "occurredAt": "2026-11-26T05:19:00+08:00",
+      "datePrecision": "time",
+      "displayDate": "2026-11-26",
+      "source": "Obsidian",
+      "sourceUrl": "https://obsidian.md/help/connectors",
+      "locales": {
+        "zh": {
+          "title": "Obsidian 给 ChatGPT、Claude 和 Cursor 提供官方连接方式",
+          "category": "AI 工具",
+          "body": [
+            "Obsidian 发布连接器，提供让 ChatGPT、Claude、Cursor 等工具使用 Obsidian 笔记的官方路径。官方帮助文档列出搜索、编辑笔记及生成结构化内容等能力，不同工具的接入方式不完全相同。",
+            "连接器不等于 Obsidian 自带 AI。是否能读、写或同步取决于使用的工具、命令和权限；需要外部模型处理的正文也可能发送给相应服务。"
+          ],
+          "insight": "先用只含测试资料的笔记库验证权限与操作范围，再决定是否给日常笔记开放访问。"
+        },
+        "en": {
+          "title": "Obsidian adds official connectors for ChatGPT, Claude and Cursor",
+          "category": "AI tools",
+          "body": [
+            "Obsidian introduced official ways for agents such as ChatGPT, Claude and Cursor to work with Obsidian notes. Its help page lists actions such as searching and editing notes and explains that setup differs by client.",
+            "This does not put a built-in AI model inside Obsidian. Read, write and sync abilities depend on the tool, commands and permissions, and a model provider may process any note content passed to it."
+          ],
+          "insight": "Start with a vault that contains only test notes to confirm how permissions and edits work."
+        }
+      }
+    },
+    {
+      "id": "huawei-qiankun-ecosystem",
+      "channel": "frontier",
+      "occurredAt": "2026-11-26T18:15:00+08:00",
+      "datePrecision": "time",
+      "displayDate": "2026-11-26",
+      "source": "华为乾崑",
+      "sourceUrl": "https://auto.huawei.com/cn/campaign/ecosystem-conference-2026",
+      "locales": {
+        "zh": {
+          "title": "华为乾崑展示驾驶辅助更新：先查具体车款与软件版本",
+          "category": "智能汽车",
+          "body": [
+            "华为乾崑 11 月 26 日在广州生态大会展示 ADS 5、车位到车位 3.0 及鸿蒙座舱的助手和智能体生态。ADS 5 早在 4 月公布，本次不是一款硬件的首发。",
+            "这些是生态与技术展示，具体可用功能随车型、版本和后续更新而变。乘用车上的 ADS 是驾驶辅助，不能按演示推定车辆已经具备无人驾驶能力。"
+          ],
+          "insight": "考虑买车时，优先核对同一地区、同一版本车型已开放的功能和使用条件。"
+        },
+        "en": {
+          "title": "Huawei’s Qiankun showcase: check the car and software version",
+          "category": "Smart vehicles",
+          "body": [
+            "Huawei showed ADS 5, parking-to-parking 3.0 and HarmonyOS cockpit tools at its Qiankun ecosystem event in Guangzhou on November 26. ADS 5 was introduced in April; this was not a hardware launch.",
+            "What is available depends on the car, software version and later updates. Huawei describes ADS for consumer cars as driver assistance, rather than unattended driving."
+          ],
+          "insight": "Check the features currently enabled on the exact trim and software version sold in your region."
+        }
+      }
+    }
+  ]
+}

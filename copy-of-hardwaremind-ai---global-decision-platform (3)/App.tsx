@@ -1,3 +1,4 @@
+import { useEditorialFeed } from './hooks/useEditorialFeed';
 
 import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { Send, X } from 'lucide-react';
@@ -368,13 +369,14 @@ const AppContent: React.FC = () => {
     selectedProducts, toggleSelection,
     favorites, toggleFavorite,
     searchQuery, setSearchQuery, handleSearch, isSearching,
-    newsFeed,
     isComparing, comparisonResult, runComparison,
     activeCategory, setActiveCategory, categories,
     isChatOpen, setIsChatOpen, chatMessages, chatInput, setChatInput, isChatLoading, handleSendChat, chatEndRef,
     keynoteItems, communityPosts, milestones, catalog, latestFiveProducts, handleAddPost, handleUpdatePost, handleDeletePost,
     syncStatus, lastSynced
   } = useAppLogic(lang, t, toast);
+
+  const newsFeed = useEditorialFeed(lang);
 
   // Helper to handle product view navigation
   const handleViewProduct = (p: Product) => {

@@ -128,7 +128,7 @@ export const NewsDetailView: React.FC<NewsDetailViewProps> = ({ news, onBack, t,
                         <span>{lang === 'zh' ? '怎么看这条情报？' : 'How Aiva reads this intel'}</span>
                     </h3>
                     <p className="text-sm leading-relaxed">
-                        {buildAivaInsight()}
+                        {news.editorialInsight || buildAivaInsight()}
                     </p>
                 </div>
 
@@ -148,12 +148,13 @@ export const NewsDetailView: React.FC<NewsDetailViewProps> = ({ news, onBack, t,
                         ))}
                     </div>
                     <div className="flex gap-3">
-                        <button className={clsx(
-                            "p-3 rounded-full border transition-colors",
-                            isDark ? "border-white/20 hover:bg-white/10" : "border-black/10 hover:bg-black/5"
-                        )}>
-                            <Share2 size={20} />
-                        </button>
+                        {typeof navigator.share === 'function' && (
+                            <button type="button" aria-label={lang === 'zh' ? '分享' : 'Share'}
+                                onClick={() => { void navigator.share({ title: news.title, url: window.location.href }).catch(() => {}); }}
+                                className={clsx("p-3 rounded-full border transition-colors", isDark ? "border-white/20 hover:bg-white/10" : "border-black/10 hover:bg-black/5")}>
+                                <Share2 size={20} />
+                            </button>
+                        )}
                         {news.readMoreUrl && (
                             <a 
                                 href={news.readMoreUrl} 
@@ -164,7 +165,7 @@ export const NewsDetailView: React.FC<NewsDetailViewProps> = ({ news, onBack, t,
                                     isDark ? "bg-white text-black hover:bg-gray-200" : "bg-black text-white hover:bg-gray-800"
                                 )}
                             >
-                                {t('home_read_more')} <ExternalLink size={16} />
+                                {lang === 'zh' ? '查看原始来源' : 'View original source'} <ExternalLink size={16} />
                             </a>
                         )}
                     </div>
